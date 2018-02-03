@@ -7,21 +7,6 @@
     android:orientation="vertical"
     tools:context="io.qhacks.var_mapper.SecondActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create/Search a map"
-        android:textAlignment="center"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="1dp" />
-
-    <Button
-        android:id="@+id/second_createnewmap_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create new map +" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
