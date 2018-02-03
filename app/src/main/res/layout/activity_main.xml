@@ -7,21 +7,29 @@
     android:orientation="vertical"
     tools:context="io.qhacks.var_mapper.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:text="Var Mapper"
-        android:textAlignment="center"
-        android:textSize="40sp"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="49dp" />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="194dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/logo" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/main_showmap_lv"
+        android:layout_width="match_parent"
+        android:layout_height="352dp" />
 
     <Button
-        android:id="@+id/main_startBtn"
+        android:id="@+id/main_downloadnewmap_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start" />
+        android:text="Download New Map" />
 
 </LinearLayout>
