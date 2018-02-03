@@ -9,11 +9,12 @@ import java.util.HashMap;
 
 public class Cluster {
     private int clusterID;
-    private ArrayList<Integer> storesInCluster = new ArrayList<>();
-    private HashMap<Integer, ArrayList<Integer>> clusterJoints = new HashMap<>();
+    private ArrayList<String> stores = new ArrayList<>();
+    private HashMap<Integer, ArrayList<String>> clusterJoints = new HashMap<>();
 
-    private Cluster(int clusterID, HashMap<Integer, ArrayList<Integer>> clusterJoints) {
+    private Cluster(int clusterID, ArrayList<String> stores, HashMap<Integer, ArrayList<String>> clusterJoints) {
         this.clusterID = clusterID;
+        this.stores = stores;
         this.clusterJoints = clusterJoints;
     }
 
@@ -25,19 +26,19 @@ public class Cluster {
         this.clusterID = clusterID;
     }
 
-    public HashMap<Integer, ArrayList<Integer>> getClusterJoints() {
+    public HashMap<Integer, ArrayList<String>> getClusterJoints() {
         return clusterJoints;
     }
 
-    public void setClusterJoints(HashMap<Integer, ArrayList<Integer>> clusterJoints) {
+    public void setClusterJoints(HashMap<Integer, ArrayList<String>> clusterJoints) {
         this.clusterJoints = clusterJoints;
     }
 
-    public ArrayList<Integer> getStoresInCluster() {
-        return storesInCluster;
+    public ArrayList<String> getStores() {
+        return stores;
     }
 
-    public void setStoresInCluster(ArrayList<Integer> storesInCluster) {
-        this.storesInCluster = storesInCluster;
+    public void setStores(ArrayList<String> storesInCluster) {
+        this.stores = storesInCluster;
     }
 }
