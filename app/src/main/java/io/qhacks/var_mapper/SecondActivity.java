@@ -55,7 +55,8 @@ public class SecondActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Cursor cursor = null ;
-                cursor = sqLiteDatabase.rawQuery("select * from map where name = '" + textView.getText() + "'", null);
+                cursor = sqLiteDatabase.rawQuery("select * from map where name LIKE '" + textView.getText()
+                        + "'", null);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 searchList.setAdapter(adapter);
                 adapter.clear();
