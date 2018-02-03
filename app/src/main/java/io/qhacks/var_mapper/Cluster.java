@@ -12,7 +12,7 @@ public class Cluster {
     private ArrayList<String> stores = new ArrayList<>();
     private HashMap<Integer, ArrayList<String>> clusterJoints = new HashMap<>();
 
-    private Cluster(int clusterID, ArrayList<String> stores, HashMap<Integer, ArrayList<String>> clusterJoints) {
+    public Cluster(int clusterID, ArrayList<String> stores, HashMap<Integer, ArrayList<String>> clusterJoints) {
         this.clusterID = clusterID;
         this.stores = stores;
         this.clusterJoints = clusterJoints;
