@@ -14,28 +14,28 @@ public class PathFinder3 {
     String destination;
     int destinationCluster;
     int currLocation;
-    String text1,text2,text3,text4;
+    String text1,text2,text3,text4,search;
     PathFinder3(List<Cluster> _map, String _destination){
         map = _map;
         destination = _destination;
         destinationCluster = findCluster(destination);
         if (destinationCluster == 0){
+            search = "Microsoft";
             text1 = "You have arrived at Microsoft. Proceed to TD";
             text2 =  "Proceed to Microsoft";
-            text3 = "You have arrived at your destination";
-            text4 = "Destination within vicinity";
+
         } else if (destinationCluster == 1){
+            search = "TD";
             text1 = "You have arrived at TD. Proceed to Microsoft";
             text2 = "Proceed to TD";
-            text3 = "You have arrived at your destination";
-            text4 = "Destination within vicinity";
+
         }
     }
 
     public String findCurrLocation(String location){
         int currCluster = getClusterID(location);
         if (currCluster >= 0){
-            if (location.equals("Microsoft") || location.equals("TD")){
+            if (location.equals(search)){
                 return text1;
             } else if (currCluster == 0){
                 return text2;
