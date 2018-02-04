@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 1,7
 Deloitte,0
 IBM,0
@@ -12,3 +13,14 @@ Telus,0
 RL,0
 Avanade,0
 you.i,1
+=======
+w,w,w,w,w,w,w,w,Deloitte,IBM,w,w,w
+w,w,,,,,,stdlib,,,,,w
+w,w,,,,,,stdlib,,,,,w
+w,w,,,,,Telus,stdlib,,,,,MLH
+w,w,,,,,,w,eSight,eSight,iGan,,westo
+w,w,,,,,,,,,,,w
+w,w,,MLH,TD,,w,w,w,w,Microsoft,w,w
+w,w,,w,RL,,you.i,w,w,w,w,w,w
+w,w,Hardware,w,avanade,w,w,w,w,w,w,w,w
+>>>>>>> d948692b39029fa3f675e01cc2ee2141052a85df
