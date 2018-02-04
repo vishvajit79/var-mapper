@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 w,w,w,w,w,w,w,w,Deloitte,IBM,w,w,w
 w,w,,,,,,stdlib,,,,,w
 w,w,,,,,,stdlib,,,,,w
@@ -7,3 +8,20 @@ w,w,,,,,,,,,,,w
 w,w,,MLH,TD,,w,w,w,w,Microsoft,w,w
 w,w,,w,RL,,you.i,w,w,w,w,w,w
 w,w,Hardware,w,avanade,w,w,w,w,w,w,w,w
+=======
+1,8
+Deloitte,0
+IBM,0
+MLH,0
+xesto,0
+iGAN,0
+eSight,0
+Microsoft,2
+stdlib,0
+2,5
+TD,1
+Telus,0
+RL,0
+Avanade,0
+you.i,0
+>>>>>>> a6872ad7a835e2e4186f1b6cea14abb1283716f2
