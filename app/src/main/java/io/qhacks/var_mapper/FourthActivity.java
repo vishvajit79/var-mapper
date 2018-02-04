@@ -1,7 +1,6 @@
 package io.qhacks.var_mapper;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +19,7 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -27,7 +27,6 @@ import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -35,13 +34,10 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -53,7 +49,6 @@ import java.util.Locale;
 import java.util.UUID;
 
 import clarifai2.dto.model.output.ClarifaiOutput;
-import clarifai2.dto.prediction.Concept;
 import clarifai2.dto.prediction.Prediction;
 
 public class FourthActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
@@ -75,7 +70,7 @@ public class FourthActivity extends AppCompatActivity implements TextToSpeech.On
     private CaptureRequest.Builder captureRequestBuilder;
     private Size imageDimension;
     private ImageReader imageReader;
-    private Cortana cortana;
+//    private Cortana cortana;
 
     //Save to FILE
     private File file;
@@ -123,8 +118,8 @@ public class FourthActivity extends AppCompatActivity implements TextToSpeech.On
         }
     };
 
-    private PathFinder2 pf;
-    private String dest = "Avanade";
+    private PathFinder3 pf;
+    private String dest;
     private Clarifai_Process CP;
     private String searchname;
     private TextToSpeech tts;
@@ -135,12 +130,12 @@ public class FourthActivity extends AppCompatActivity implements TextToSpeech.On
         setContentView(R.layout.activity_fourth);
         tts = new TextToSpeech(this, this);
         GenerateMap genMap = new GenerateMap();
-        cortana = new Cortana();
+//        cortana = new Cortana();
         Intent intent  = getIntent();
-        searchname = intent.getStringExtra("searchId");
+        dest = intent.getStringExtra("searchId");
         try {
             List<Cluster> clusters = genMap.new_Map(new File(this.getApplicationInfo().dataDir, "sponsor_bay.txt").getAbsolutePath());
-            pf = new PathFinder2(clusters, dest);
+            pf = new PathFinder3(clusters, dest);
             CP = new Clarifai_Process();
         } catch (IOException e) {
             e.printStackTrace();
@@ -155,8 +150,6 @@ public class FourthActivity extends AppCompatActivity implements TextToSpeech.On
             @Override
             public void onClick(View view) {
                 takePicture();
-                speakOut("Hello");
-                speakOut("Good Night");
             }
         });
 
@@ -217,8 +210,8 @@ public class FourthActivity extends AppCompatActivity implements TextToSpeech.On
                         String location = classifications.data().get(0).asConcept().name();
                         //Toast.makeText(FourthActivity.this, location, Toast.LENGTH_LONG).show();
                         String message = pf.findCurrLocation(location);
-                        //speakOut(message);
-                        cortana.getVoice(message);
+                        speakOut(message);
+//                        cortana.getVoice(message,FourthActivity.this);
                         Toast.makeText(FourthActivity.this, message, Toast.LENGTH_LONG).show();
                     }
                     catch (Exception e)
@@ -417,8 +410,6 @@ public class FourthActivity extends AppCompatActivity implements TextToSpeech.On
     }
 
     private void speakOut(String text) {
-
-        text = "Turn right to IBM";
 
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
