@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Logan\Desktop\var-mapper\VarMapper.iml" filepath="C:\Users\Logan\Desktop\var-mapper\VarMapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VarMapper.iml" filepath="$PROJECT_DIR$/VarMapper.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Logan\Desktop\var-mapper\app\app.iml" filepath="C:\Users\Logan\Desktop\var-mapper\app\app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/var-mapper.iml" filepath="$PROJECT_DIR$/var-mapper.iml" />
     </modules>
   </component>
 </project>

@@ -16,12 +16,13 @@ public class SixthActivity extends Activity {
         setContentView(R.layout.activity_sixth);
 
         Button button = findViewById(R.id.sixth_find_btn);
-        TextView textView = findViewById(R.id.sixth_storename_txt);
+        final TextView textView = findViewById(R.id.sixth_storename_txt);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), FourthActivity.class);
+                intent.putExtra("searchId", textView.getText().toString());
                 startActivity(intent);
             }
         });

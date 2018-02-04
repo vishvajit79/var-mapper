@@ -28,7 +28,7 @@ public class FifthActivity extends Activity {
         liveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(view.getContext(), FourthActivity.class);
+                Intent intent1 = new Intent(view.getContext(), SixthActivity.class);
                 startActivity(intent1);
             }
         });
@@ -36,7 +36,7 @@ public class FifthActivity extends Activity {
         stillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(view.getContext(), FourthActivity.class);
+                Intent intent1 = new Intent(view.getContext(), SixthActivity.class);
                 startActivity(intent1);
             }
         });

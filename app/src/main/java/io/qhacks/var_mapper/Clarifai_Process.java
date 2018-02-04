@@ -7,6 +7,7 @@ import clarifai2.api.ClarifaiClient;
 import clarifai2.dto.input.ClarifaiInput;
 import clarifai2.dto.model.output.ClarifaiOutput;
 import clarifai2.dto.prediction.Concept;
+import clarifai2.dto.prediction.Prediction;
 import okhttp3.OkHttpClient;
 
 /**
@@ -14,25 +15,23 @@ import okhttp3.OkHttpClient;
  */
 
 public class Clarifai_Process {
-    private final String API_KEY = "d584f38ca7ba42d2909b5a149162d790";
+    private final String API_KEY = "b3c7dcf610c54fdfb5a3054daeec9c2f";
     private ClarifaiClient client;
 
     public Clarifai_Process(){
-        client = new ClarifaiBuilder(API_KEY)
-                .client(new OkHttpClient()) // OPTIONAL. Allows customization of OkHttp by the user
+        client = new ClarifaiBuilder("b3c7dcf610c54fdfb5a3054daeec9c2f")
+                //.client(new OkHttpClient()) // OPTIONAL. Allows customization of OkHttp by the user
                 .buildSync();
     }
 
-    public List<ClarifaiOutput<Concept>> getCategories(byte[] imageBytes){
-        List<ClarifaiOutput<Concept>> predictionResults =
-            client.getDefaultModels().generalModel() // You can also do client.getModelByID("id") to get your custom models
-                    .predict()
+    public ClarifaiOutput<Prediction> getCategories(byte[] imageBytes){
+        List<ClarifaiOutput<Prediction>> predictionResults =
+            client.predict("QHacks Sponsor logos")
                     .withInputs(
                             ClarifaiInput.forImage(imageBytes))
                     .executeSync()
                     .get();
 
-
-        return predictionResults;
+        return predictionResults.get(0);
     }
 }

@@ -1,8 +1,12 @@
 package io.qhacks.var_mapper;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -19,10 +23,12 @@ import android.media.ImageReader;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
@@ -32,6 +38,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -41,15 +49,16 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import clarifai2.dto.model.output.ClarifaiOutput;
 import clarifai2.dto.prediction.Concept;
+import clarifai2.dto.prediction.Prediction;
 
-public class FourthActivity extends AppCompatActivity {
+public class FourthActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private Button btnCapture;
     private TextureView textureView;
-    private TextView textView;
 
     //Check state orientation of output image
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -66,6 +75,7 @@ public class FourthActivity extends AppCompatActivity {
     private CaptureRequest.Builder captureRequestBuilder;
     private Size imageDimension;
     private ImageReader imageReader;
+    private Cortana cortana;
 
     //Save to FILE
     private File file;
@@ -73,6 +83,26 @@ public class FourthActivity extends AppCompatActivity {
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+
+    TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+            openCamera();
+        }
+
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+        }
+
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
+            return false;
+        }
+
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+        }
+    };
 
     CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
@@ -94,34 +124,42 @@ public class FourthActivity extends AppCompatActivity {
     };
 
     private PathFinder2 pf;
-    private String dest = "Microsoft";
+    private String dest = "Avanade";
     private Clarifai_Process CP;
+    private String searchname;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fourth);
+        tts = new TextToSpeech(this, this);
         GenerateMap genMap = new GenerateMap();
+        cortana = new Cortana();
+        Intent intent  = getIntent();
+        searchname = intent.getStringExtra("searchId");
         try {
-            List<Cluster> clusters = genMap.new_Map("sponsor_bay.csv");
+            List<Cluster> clusters = genMap.new_Map(new File(this.getApplicationInfo().dataDir, "sponsor_bay.txt").getAbsolutePath());
             pf = new PathFinder2(clusters, dest);
             CP = new Clarifai_Process();
         } catch (IOException e) {
             e.printStackTrace();
         }
         textureView = (TextureView)findViewById(R.id.textureView);
-        textView = findViewById(R.id.sixth_storename_txt);
-        dest = textView.getText().toString();
+        //dest = searchname;
         //From Java 1.4 , you can use keyword 'assert' to check expression true or false
-        assert textureView != null;
+        //assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
         btnCapture = (Button)findViewById(R.id.btnCapture);
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 takePicture();
+                speakOut("Hello");
+                speakOut("Good Night");
             }
         });
+
     }
 
     private void takePicture() {
@@ -162,27 +200,35 @@ public class FourthActivity extends AppCompatActivity {
                 public void onImageAvailable(ImageReader imageReader) {
                     Image image = null;
                     try{
-                        image = reader.acquireLatestImage();
+                        image = reader.acquireNextImage();
                         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+//                        if (image != null) {
+//                            image.close();
+//                        }
                         byte[] bytes = new byte[buffer.capacity()];
                         buffer.get(bytes);
-                        save(bytes);
-                        List<ClarifaiOutput<Concept>> classifications = CP.getCategories(bytes);
-                        String message = pf.findCurrLocation(classifications.get(0).data().get(0).name());
+                        Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 50,  stream);
+
+                        //save(bytes);
+                        ClarifaiOutput<Prediction> classifications = CP.getCategories(stream.toByteArray());
+                        String location = classifications.data().get(0).asConcept().name();
+                        //Toast.makeText(FourthActivity.this, location, Toast.LENGTH_LONG).show();
+                        String message = pf.findCurrLocation(location);
+                        //speakOut(message);
+                        cortana.getVoice(message);
                         Toast.makeText(FourthActivity.this, message, Toast.LENGTH_LONG).show();
                     }
-                    catch (FileNotFoundException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    catch (IOException e)
+                    catch (Exception e)
                     {
                         e.printStackTrace();
                     }
                     finally {
                         {
-                            if(image != null)
-                                image.close();
+//                            if(image != null)
+//                                image.close();
                         }
                     }
                 }
@@ -294,25 +340,7 @@ public class FourthActivity extends AppCompatActivity {
         }
     }
 
-    TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
-        @Override
-        public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-            openCamera();
-        }
 
-        @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-        }
-
-        @Override
-        public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-            return false;
-        }
-
-        @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-        }
-    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -357,5 +385,41 @@ public class FourthActivity extends AppCompatActivity {
         mBackgroundThread = new HandlerThread("Camera Background");
         mBackgroundThread.start();
         mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
+    }
+
+    @Override
+    public void onDestroy() {
+        // Don't forget to shutdown tts!
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onInit(int i) {
+        if (i == TextToSpeech.SUCCESS) {
+
+            int result = tts.setLanguage(Locale.US);
+
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "This Language is not supported");
+            } else {
+                btnCapture.setEnabled(true);
+                speakOut("Umm");
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
+
+    private void speakOut(String text) {
+
+        text = "Turn right to IBM";
+
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 }
