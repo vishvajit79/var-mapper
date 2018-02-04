@@ -32,35 +32,32 @@ public class GenerateMap {
         while ((line = bufferedReader.readLine()) != null) {
 
 
-
-            }
-
             String[] clusterStats = new String[2];
             String[] storeStats = new String[2];
             clusterStats = line.split(",");
             ArrayList<String> stores = new ArrayList<String>();
             HashMap<Integer, ArrayList<String>> jointStores =
                     new HashMap<Integer, ArrayList<String>>();
-            for (int i = 0;i<parseInt(clusterStats[1]);i++){
+            for (int i = 0; i < parseInt(clusterStats[1]); i++) {
                 line = bufferedReader.readLine();
                 storeStats = line.split(",");
 
-                if (!storeStats[1].equals("0")){
-                    if(jointStores.containsKey(parseInt(storeStats[1]))){
+                if (!storeStats[1].equals("0")) {
+                    if (jointStores.containsKey(parseInt(storeStats[1]))) {
                         jointStores.get(parseInt(storeStats[1])).add(storeStats[0]);
-                    } else{
+                    } else {
                         ArrayList<String> temp = new ArrayList<String>();
                         temp.add(storeStats[0]);
-                        jointStores.put(parseInt(storeStats[1]),temp);
+                        jointStores.put(parseInt(storeStats[1]), temp);
                     }
                 }
                 stores.add(storeStats[0]);
             }
 
-            Cluster temp_cluster = new Cluster(parseInt(clusterStats[0]),stores, jointStores);
+            Cluster temp_cluster = new Cluster(parseInt(clusterStats[0]), stores, jointStores);
             map_ref.add(temp_cluster);
 
-
+        }
         // Always close files.
         bufferedReader.close();
 
