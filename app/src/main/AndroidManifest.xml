@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.qhacks.var_mapper">
 
-    <!--<uses-feature android:name="android.hardware.camera" />-->
+    <!-- <uses-feature android:name="android.hardware.camera" /> -->
     <uses-permission android:name="android.hardware.camera2.full" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -36,7 +36,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FifthActivity"></activity>
+        <activity android:name=".FifthActivity" />
+        <activity android:name=".SixthActivity"></activity>
     </application>
 
 </manifest>
