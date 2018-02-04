@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="io.qhacks.var_mapper.FourthActivity">
 
-    <LinearLayout
+
+    <TextureView
+        android:id="@+id/textureView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_above="@+id/btnCapture"
 
-        <FrameLayout
-            android:id="@+id/camera_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-    </LinearLayout>
+        />
 
     <Button
-        android:id="@+id/button_capture"
+        android:id="@+id/btnCapture"
+        android:text="CAPTURE"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="98dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:text="Capture" />
+        android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>
