@@ -29,6 +29,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -42,9 +43,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import clarifai2.dto.model.output.ClarifaiOutput;
+import clarifai2.dto.prediction.Concept;
+
 public class FourthActivity extends AppCompatActivity {
     private Button btnCapture;
     private TextureView textureView;
+    private TextView textView;
 
     //Check state orientation of output image
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -88,13 +93,25 @@ public class FourthActivity extends AppCompatActivity {
         }
     };
 
+    private PathFinder2 pf;
+    private String dest = "Microsoft";
+    private Clarifai_Process CP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fourth);
-
+        GenerateMap genMap = new GenerateMap();
+        try {
+            List<Cluster> clusters = genMap.new_Map("sponsor_bay.csv");
+            pf = new PathFinder2(clusters, dest);
+            CP = new Clarifai_Process();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         textureView = (TextureView)findViewById(R.id.textureView);
+        textView = findViewById(R.id.sixth_storename_txt);
+        dest = textView.getText().toString();
         //From Java 1.4 , you can use keyword 'assert' to check expression true or false
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
@@ -150,7 +167,9 @@ public class FourthActivity extends AppCompatActivity {
                         byte[] bytes = new byte[buffer.capacity()];
                         buffer.get(bytes);
                         save(bytes);
-
+                        List<ClarifaiOutput<Concept>> classifications = CP.getCategories(bytes);
+                        String message = pf.findCurrLocation(classifications.get(0).data().get(0).name());
+                        Toast.makeText(FourthActivity.this, message, Toast.LENGTH_LONG).show();
                     }
                     catch (FileNotFoundException e)
                     {

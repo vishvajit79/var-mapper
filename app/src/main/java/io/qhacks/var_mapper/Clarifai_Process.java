@@ -23,7 +23,7 @@ public class Clarifai_Process {
                 .buildSync();
     }
 
-    public ClarifaiOutput<Concept> getCategories(byte[] imageBytes){
+    public List<ClarifaiOutput<Concept>> getCategories(byte[] imageBytes){
         List<ClarifaiOutput<Concept>> predictionResults =
             client.getDefaultModels().generalModel() // You can also do client.getModelByID("id") to get your custom models
                     .predict()
@@ -33,6 +33,6 @@ public class Clarifai_Process {
                     .get();
 
 
-        return predictionResults.get(0);
+        return predictionResults;
     }
 }
