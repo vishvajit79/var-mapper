@@ -1,15 +1,17 @@
 <h1 align="center">Navarai</h1>
-<h4 align="center">A Queens University Hackathon Project</h4>
-
-### Inspiration
-
-During our brainstorming session, the most interesting ideas seemed to be centered about augmented reality and machine-learning. NavARAI was born at the intersection of the two, a project meant to use Clarifai image recognition in order to provide navigational instructions displayed to a user on a pair of eSight goggles.
-
-[![Video of our project](https://github.com/vishvajit79/var-mapper/blob/master/images/video_snippet.jpg)](https://www.youtube.com/watch?v=pEvHpAau5aU&t=5s)
+<h4 align="center">A Queens University Hackathon Project (Jan 2018)</h4>
 
 ### What it does
 
 NavARAI is a mobile app especially meant for shopping centers, home to a bounty of easily visible icons and logos. Provided such a center has been mapped out with the location of these landmarks, our app is able to search for a signed location and provide navigational instructions to the user based on visible landmarks along the way. At any point, the user is able to snap a photo of their surroundings and the NavARAI will detect nearby recognized symbols, thus determining the user's position, and providing them with new landmarks to travel towards in order to reach their destination.
+
+[![Video of our project](https://github.com/vishvajit79/var-mapper/blob/master/images/video_snippet.jpg)](https://www.youtube.com/watch?v=pEvHpAau5aU&t=5s)
+
+
+
+### Inspiration
+
+During our brainstorming session, the most interesting ideas seemed to be centered about augmented reality and machine-learning. NavARAI was born at the intersection of the two, a project meant to use Clarifai image recognition in order to provide navigational instructions displayed to a user on a pair of eSight goggles.
 
 
 
