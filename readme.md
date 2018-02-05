@@ -1,3 +1,6 @@
+<h1 align="center">Navarai</h1>
+<h4 align="center">A Queens University Hackathon Project</h4>
+
 ## Inspiration
 
 During our brainstorming session, the most interesting ideas seemed to be centered about augmented reality and machine-learning. NavARAI was born at the intersection of the two, a project meant to use Clarifai image recognition in order to provide navigational instructions displayed to a user on a pair of eSight goggles.
