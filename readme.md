@@ -5,7 +5,7 @@
 
 During our brainstorming session, the most interesting ideas seemed to be centered about augmented reality and machine-learning. NavARAI was born at the intersection of the two, a project meant to use Clarifai image recognition in order to provide navigational instructions displayed to a user on a pair of eSight goggles.
 
-
+[![Video of our project](https://github.com/vishvajit79/var-mapper/blob/master/images/video_snippet.jpg)](https://www.youtube.com/watch?v=pEvHpAau5aU&t=5s)
 
 ### What it does
 
@@ -40,5 +40,3 @@ We learned many things while working in this hackathon, including but not limite
 ### What's next for NavARAI
 
 Seeing that our original vision for NavARAI was for it to be integrated with augmented reality devices, this is a natural next step for the project. As for the business potential of NavARAI, through either AR devices or smartphones, organisations could greatly benefit from the convenience brought to their customers by implementing NavARAI systems for navigating their premises in any environment, be it shopping centers, sporting events, music concerts, or even perhaps driving.
-
-[![IMAGE ALT TEXT HERE](https://github.com/vishvajit79/navarai/blob/master/app/src/main/res/drawable/logo.png)](https://www.youtube.com/watch?v=pEvHpAau5aU&t=5s)
